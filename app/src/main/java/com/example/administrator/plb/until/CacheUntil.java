@@ -20,12 +20,12 @@ public class CacheUntil {
          }
          return preferences.getBoolean(key,def);
     }
-    public static void putString(Context c,String key,String isAuto){
+    public static void putString(Context c,String key,String value){
          if(context==null){
              context=c;
              preferences=context.getSharedPreferences("cache",Context.MODE_PRIVATE);
          }
-         preferences.edit().putString(key,isAuto).commit();
+         preferences.edit().putString(key,value).commit();
     }
     public static String getString(Context c,String key,String def){
          if(context==null){

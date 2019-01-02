@@ -7,7 +7,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -19,10 +18,10 @@ import android.widget.RelativeLayout;
 
 import com.example.administrator.plb.R;
 import com.example.administrator.plb.adapter.FragmentAdapter;
-import com.example.administrator.plb.fragment.ActionFragment;
-import com.example.administrator.plb.fragment.ContactsFragment;
-import com.example.administrator.plb.fragment.EyeFragment;
-import com.example.administrator.plb.fragment.InformFragment;
+import com.example.administrator.plb.fragment.MyFragment;
+import com.example.administrator.plb.fragment.OperatingFragment;
+import com.example.administrator.plb.fragment.OrderFragment;
+import com.example.administrator.plb.fragment.OrderManageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,76 +29,33 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    private ImageView tour;
     private ViewPager viewPager;
     private BottomNavigationView bottomView;
     private FragmentAdapter adapter;
-    private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private RelativeLayout right;
-    private NavigationView left;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         initData();
-        setSupportActionBar(toolbar);
-        toolbar.inflateMenu(R.menu.main);
-        toolbar.setOnMenuItemClickListener(menuItemClickListener);
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawer,toolbar,0,0);
-        toggle.syncState();
     }
 
     private void initView() {
-//        tour = (ImageView) findViewById(R.id.tour);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         bottomView = (BottomNavigationView) findViewById(R.id.bottomView);
-        drawer = findViewById(R.id.drawer);
-        right = findViewById(R.id.right);
-        toolbar = findViewById(R.id.toolbar);
-        left=findViewById(R.id.navigation);
     }
 
     private void initData() {
         List<Fragment>list=new ArrayList<>();
-        list.add(new InformFragment());
-        list.add(new ContactsFragment());
-        list.add(new EyeFragment());
-        list.add(new ActionFragment());
+        list.add(new OrderFragment());
+        list.add(new OrderManageFragment());
+        list.add(new OperatingFragment());
+        list.add(new MyFragment());
         adapter=new FragmentAdapter(getSupportFragmentManager(),list);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(listener);
         bottomView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        drawer.addDrawerListener(drawerListener);
     }
-    private DrawerLayout.DrawerListener drawerListener=new DrawerLayout.DrawerListener() {
-        @Override
-        public void onDrawerSlide(@NonNull View view, float v) {
-            right.layout(left.getRight(),0,left.getRight()+right.getWidth(),right.getHeight());
-        }
-
-        @Override
-        public void onDrawerOpened(@NonNull View view) {
-
-        }
-
-        @Override
-        public void onDrawerClosed(@NonNull View view) {
-
-        }
-
-        @Override
-        public void onDrawerStateChanged(int i) {
-
-        }
-    };
-    private Toolbar.OnMenuItemClickListener menuItemClickListener=new Toolbar.OnMenuItemClickListener() {
-        @Override
-        public boolean onMenuItemClick(MenuItem menuItem) {
-            return true;
-        }
-    };
     private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener=new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
